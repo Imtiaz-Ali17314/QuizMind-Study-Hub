@@ -3,22 +3,312 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz App</title>
+    <title>QuizMind // AI Study Hub & Gamified Trivia Workspace</title>
+    <meta name="description" content="An intelligent study partner that parses text into quizzes, hosts flashcard decks, and tracks gamified testing streaks, lifelines, and stats." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="app">
-      <h1>Simple Quiz</h1>
-      <div class="quiz">
-        <h2 id="question">Question will going here</h2>
-        <div id="answer-btns">
-          <button class="btn">Answer 1</button>
-          <button class="btn">Answer 2</button>
-          <button class="btn">Answer 3</button>
-          <button class="btn">Answer 4</button>
+    <div class="app-container">
+      
+      <!-- App Header -->
+      <header class="app-header">
+        <div class="logo-area">
+          <div class="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 18H11V16H13V18ZM13.5 12.26L12.6 13.16C11.88 13.88 11.4 14.5 11.4 15.5H9.6C9.6 13.84 10.28 12.84 11 12.12L12.08 11.02C12.42 10.68 12.6 10.2 12.6 9.6C12.6 8.5 11.7 7.6 10.6 7.6C9.5 7.6 8.6 8.5 8.6 9.6H6.8C6.8 7.5 8.5 5.8 10.6 5.8C12.7 5.8 14.4 7.5 14.4 9.6C14.4 10.64 14.04 11.58 13.5 12.26Z" fill="url(#logo-grad)" />
+              <defs>
+                <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ec4899" />
+                  <stop offset="100%" stop-color="#8b5cf6" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h1>QuizMind</h1>
+          <span class="version-tag">v2.0</span>
         </div>
-        <button class="next-btn">Next</button>
-      </div>
+        <p class="subtitle">The Gamified Study Partner, Flashcard Workspace & Custom Quiz Generator</p>
+      </header>
+
+      <!-- Dashboard Wrapper -->
+      <main class="dashboard-card">
+        
+        <!-- ==========================================
+             VIEW 1: SETUP / STUDY STUDIO
+             ========================================== -->
+        <section id="view-setup" class="view-panel active">
+          <div class="setup-grid">
+            <!-- Left Side: Catalog selection & Custom generator -->
+            <div class="setup-main">
+              <h3>Study Workspace Studio</h3>
+              <p class="section-desc">Select a preset learning deck or paste custom notes to instantly generate an interactive quiz.</p>
+              
+              <!-- Custom Parser -->
+              <div class="custom-parser-box">
+                <label for="input-notes">AI Note-to-Quiz Parser</label>
+                <textarea id="input-notes" placeholder="Paste your study notes, glossary lists, or text paragraphs here. QuizMind will automatically analyze definitions, dates, and facts to build a custom test deck..."></textarea>
+                <div class="parser-action-row">
+                  <span class="parser-limit-lbl">Supports up to 2000 chars</span>
+                  <button id="btn-parse-notes" class="studio-btn primary-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                      <polyline points="2 17 12 22 22 17"></polyline>
+                      <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                    <span>Generate AI Deck</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Presets Grid -->
+              <div class="presets-section">
+                <h5>Preset Trivia & Study Decks</h5>
+                <div class="presets-grid" id="presets-grid-container">
+                  <div class="preset-card active" data-deck="science">
+                    <div class="preset-icon">🔬</div>
+                    <h6>General Science</h6>
+                    <p>Biology, chemistry, and space trivia</p>
+                  </div>
+                  <div class="preset-card" data-deck="geography">
+                    <div class="preset-icon">🌍</div>
+                    <h6>Geography & Nations</h6>
+                    <p>Capital cities, continents, and terrains</p>
+                  </div>
+                  <div class="preset-card" data-deck="history">
+                    <div class="preset-icon">🏛️</div>
+                    <h6>World History</h6>
+                    <p>Ancient civilizations, epochs, and events</p>
+                  </div>
+                  <div class="preset-card" data-deck="tech">
+                    <div class="preset-icon">💻</div>
+                    <h6>Technology & Code</h6>
+                    <p>Algorithms, computers, and history of net</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side: Mode selection & Info -->
+            <div class="setup-sidebar">
+              <!-- Selected Deck Card -->
+              <div class="info-card">
+                <h5>Active Study Config</h5>
+                <div class="config-stat">
+                  <span class="config-label">Active Deck</span>
+                  <span id="active-deck-name" class="config-value">General Science</span>
+                </div>
+                <div class="config-stat">
+                  <span class="config-label">Question Count</span>
+                  <span id="active-deck-count" class="config-value">4 Questions</span>
+                </div>
+                <div class="config-stat">
+                  <span class="config-label">Streak Record</span>
+                  <span id="active-streak-record" class="config-value">🔥 0</span>
+                </div>
+              </div>
+
+              <!-- Mode Launchers -->
+              <div class="mode-launchers">
+                <button id="btn-launch-quiz" class="mode-launch-btn primary-glow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <span>Launch Gamified Quiz</span>
+                </button>
+
+                <button id="btn-launch-flash" class="mode-launch-btn secondary-glow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                    <path d="M12 6v6l4 2"></path>
+                  </svg>
+                  <span>Active Recall Cards</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 2: ACTIVE GAMIFIED QUIZ PLAYGROUND
+             ========================================== -->
+        <section id="view-quiz" class="view-panel">
+          <div class="quiz-interface">
+            <!-- Header HUD bar -->
+            <div class="quiz-hud">
+              <div class="hud-item">
+                <span class="hud-label">Progress</span>
+                <span id="hud-progress" class="hud-val">1 / 4</span>
+              </div>
+              <div class="hud-item hud-streak">
+                <span id="hud-streak-count" class="hud-val">🔥 0</span>
+                <span id="hud-multiplier" class="streak-mult">1.0x Mult</span>
+              </div>
+              <div class="hud-item">
+                <span class="hud-label">Score</span>
+                <span id="hud-score" class="hud-val">0 pts</span>
+              </div>
+            </div>
+
+            <!-- Quiz Play Body -->
+            <div class="quiz-play-body">
+              <!-- Center Question Block -->
+              <div class="question-block">
+                
+                <!-- Circular Animated Timer -->
+                <div class="timer-wrapper">
+                  <svg width="80" height="80" viewBox="0 0 80 80" class="timer-svg">
+                    <circle class="timer-track" cx="40" cy="40" r="34" />
+                    <circle class="timer-bar" cx="40" cy="40" r="34" id="timer-bar-circle" />
+                  </svg>
+                  <div class="timer-label" id="timer-digital-label">15s</div>
+                </div>
+
+                <h2 id="question">Loading question text...</h2>
+              </div>
+
+              <!-- Options Selection Grid -->
+              <div id="answer-btns" class="options-grid">
+                <!-- Buttons rendered dynamically via JS -->
+              </div>
+            </div>
+
+            <!-- Footer control HUD (Lifelines & Progression) -->
+            <div class="quiz-footer-hud">
+              <!-- Lifelines Panel -->
+              <div class="lifelines-cluster">
+                <span class="lifeline-title">Lifelines:</span>
+                <button id="lifeline-fifty" class="lifeline-btn">
+                  <span class="lifeline-icon">✂️</span>
+                  <span>50/50</span>
+                </button>
+                <button id="lifeline-freeze" class="lifeline-btn">
+                  <span class="lifeline-icon">❄️</span>
+                  <span>Freeze Time</span>
+                </button>
+              </div>
+
+              <button class="next-btn" id="quiz-next-btn">Next Question</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 3: ACTIVE RECALL FLASHCARD DECK
+             ========================================== -->
+        <section id="view-flashcard" class="view-panel">
+          <div class="flashcard-workspace">
+            <div class="flashcard-hud">
+              <span id="flashcard-deck-title">General Science Decks</span>
+              <span id="flashcard-progress">Card 1 / 4</span>
+            </div>
+
+            <!-- Flashcard Frame (perspective flip container) -->
+            <div class="flashcard-container" id="flashcard-container-el">
+              <div class="flashcard-inner">
+                <!-- Front: Term/Question -->
+                <div class="flashcard-face flashcard-front">
+                  <div class="flashcard-hint-lbl">ACTIVE RECALL TERM</div>
+                  <h3 id="flashcard-question-text">Loading deck term...</h3>
+                  <p class="click-flip-prompt">Click to reveal answer</p>
+                </div>
+                <!-- Back: Definition/Answer -->
+                <div class="flashcard-face flashcard-back">
+                  <div class="flashcard-hint-lbl">DEFINITION / ANSWER</div>
+                  <h3 id="flashcard-answer-text">Loading explanation details...</h3>
+                  <p class="click-flip-prompt">Click to flip back</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pile management buttons -->
+            <div class="flashcard-actions">
+              <button id="btn-flash-review" class="flash-action-btn review-btn-style">
+                <span>Needs Review</span>
+              </button>
+              <button id="btn-flash-mastered" class="flash-action-btn master-btn-style">
+                <span>Mastered</span>
+              </button>
+            </div>
+
+            <div class="flashcard-footer-controls">
+              <button id="btn-exit-flashcards" class="exit-btn-style">Exit Study Deck</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==========================================
+             VIEW 4: RESULTS, CANVAS TELEMETRY & SCOREBOARD
+             ========================================== -->
+        <section id="view-results" class="view-panel">
+          <div class="results-layout">
+            <!-- Header Feedback -->
+            <div class="results-header">
+              <div class="celebration-trophy">🏆</div>
+              <h2 id="results-verdict">Quiz Complete! Excellent Job!</h2>
+              <p id="results-score-details">You scored 3 out of 4 (75%)</p>
+            </div>
+
+            <!-- Performance Grid stats -->
+            <div class="results-stats-row">
+              <div class="results-stat-card">
+                <span class="stat-lbl">Points Earned</span>
+                <span id="stat-points" class="stat-val">3,200 pts</span>
+              </div>
+              <div class="results-stat-card">
+                <span class="stat-lbl">Max Streak</span>
+                <span id="stat-max-streak" class="stat-val">🔥 3</span>
+              </div>
+              <div class="results-stat-card">
+                <span class="stat-lbl">Avg Response Speed</span>
+                <span id="stat-avg-speed" class="stat-val">4.2s</span>
+              </div>
+            </div>
+
+            <!-- Telemetry Chart & Leaderboard split -->
+            <div class="results-split-box">
+              <!-- Left: Canvas performance chart -->
+              <div class="chart-panel">
+                <h5>Response Velocity Profiles</h5>
+                <p class="chart-desc">Tracks correct answer response speeds vs question count.</p>
+                <div class="canvas-wrapper">
+                  <canvas id="stats-canvas"></canvas>
+                </div>
+              </div>
+
+              <!-- Right: Leaderboard history scoreboard -->
+              <div class="leaderboard-panel">
+                <h5>Historical Leaderboard</h5>
+                <div class="leaderboard-table-container">
+                  <table class="leaderboard-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Deck Name</th>
+                        <th>Accuracy</th>
+                        <th>Points</th>
+                      </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                      <!-- Rendered by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Play again CTA buttons -->
+            <div class="results-actions">
+              <button id="btn-retry-quiz" class="results-btn primary-glow">Retry Deck</button>
+              <button id="btn-back-setup" class="results-btn secondary">Back to Studio</button>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
     </div>
 
     <script src="script.js"></script>
