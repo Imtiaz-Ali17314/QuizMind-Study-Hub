@@ -23,8 +23,8 @@
 ## 🛠️ Installation
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/quiz-mind.git
-cd quiz-mind
+git clone https://github.com/Imtiaz-Ali17314/QuizMind-Study-Hub
+cd QuizMind-Study-Hub
 
 # No build step needed – just open the app
 start index.html   # Windows
