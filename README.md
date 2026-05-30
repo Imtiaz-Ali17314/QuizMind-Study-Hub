@@ -53,3 +53,4 @@ This project is licensed under the MIT License – see the `LICENSE` file for de
 
 ---
 *Built with ❤️, modern CSS, and a dash of AI magic.*
+
