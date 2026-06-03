@@ -1,4 +1,7 @@
 # 📚 Quiz‑Mind: AI‑Powered Study Hub
+> **Gamify your study notes with AI**
+
+`#AI-Study` `#Gamified-Learning` `#EdTech` `#Active-Recall` `#Quiz-Generator`
 
 ![Banner](./assets/banner.png)
 
