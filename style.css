@@ -99,6 +99,13 @@
     box-shadow: var(--shadow-glow);
   }
   
+  .logo-icon img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+  
   .app-header h1 {
     font-size: 2.5rem;
     font-weight: 800;
